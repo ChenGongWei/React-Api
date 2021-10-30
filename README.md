@@ -119,21 +119,192 @@ class Index extends React.Component {
         console.log('父组件渲染')
         let { num, number } = this.state
         return (
-            <div>父组件</div>
             <div>
-                num: { num }
-                {/* num 改变，父组件重新渲染，子组件不重新渲染 */}
-                <button onClick={() => this.setState({ num: ++num })}>num++</button>
-                <button onClick={() => this.setState({ num: --num })}>num--</button>
+                <div>父组件</div>
+                <div>
+                    num: { num }
+                    {/* num 改变，父组件重新渲染，子组件不重新渲染 */}
+                    <button onClick={() => this.setState({ num: ++num })}>num++</button>
+                    <button onClick={() => this.setState({ num: --num })}>num--</button>
+                </div>
+                <div>
+                    number: { number }
+                    {/* number 改变，父组件重新渲染；当 number 小于 5 时，子组件不重新渲染，大于 5 重新渲染 */}
+                    <button onClick={() => this.setState({ number: ++number })}>number++</button>
+                    <button onClick={() => this.setState({ number: --number })}>number--</button>
+                </div>
+                <NewTextMemo num={ num } number={ number } />
             </div>
-            <div>
-                number: { number }
-                {/* number 改变，父组件重新渲染；当 number 小于 5 时，子组件不重新渲染，大于 5 重新渲染 */}
-                <button onClick={() => this.setState({ number: ++number })}>number++</button>
-                <button onClick={() => this.setState({ number: --number })}>number--</button>
-            </div>
-            <NewTextMemo num={ num } number={ number } />
         )
     }
 }
+```
+
+
+### forwardRef
+有的时候，我们会希望在父组件获取子组件的某一个 `dom` 元素，但 `react` 不允许 `ref` 通过 `props` 传递，因为组件上已经有 `ref` 这个属性，`forwardRef` 出现就是解决这个问题。
+
+`React.forwardRef` 接受渲染函数作为参数，用 `props` 和 `ref` 来当该渲染函数的参数调用该函数，返回一个 `React` 组件，这个组件能够接受 `ref` ，并将其向下转发，这就可以实现在父组件获取子组件里的 `dom` 元素了。
+
+```js
+const Son = React.forwardRef((props, ref) => {
+    return (
+        <div>
+            <div> 子组件 </div>
+            <span ref={ref} >要获取的元素</span>
+        </div>
+    )
+}) 
+
+const Father = () => {
+
+    const ref = React.createRef()
+
+    useEffect(() => {
+      console.log(ref, '获取子组件的dom元素')
+    }, [ref])
+
+    return (
+        <div>
+            <div>父组件</div>
+            <Son ref={ref}  />
+        </div>
+    )
+}
+
+```
+
+### lazy
+> **注意：**
+> `React.lazy` 和 `Suspense` 技术还不支持服务端渲染。如果你想在使用服务端渲染的应用中使用，可以使用 [Loadable Components](https://github.com/gregberge/loadable-components) 这个库。
+
+`React.lazy` 可以定义懒加载组件，配合 `Suspense` 使用可以实现动态加载组件的效果。`React.lazy` 接受一个函数，这个函数必须返回一个 `Promise` ， 该 `Promise` 需要 `resolve` 一个 `default export` 的 `React` 组件。
+
+```js
+/** Test.js */
+class Test extends React.Component{
+    constructor(props){
+        super(props)
+    }
+
+    componentDidMount(){
+        console.log('组件渲染')
+    }
+
+    render(){
+        return (
+            <div className="img">
+                <img src={cgw} className="cgw" />
+            </div>
+        )
+    }
+}
+export default Test
+
+/** Index.js */
+import Test from './Test.js'
+
+const LazyComponent = React.lazy(() => new Promise(resolve => {
+    // 用 setTimeout 来模拟 import 异步引入效果
+    setTimeout(()=>{
+        resolve({
+            default: ()=> <Test />
+        })
+    }, 2000)
+}))
+
+/**
+const LazyComponent = React.lazy(() => import('./Test.js'))
+*/
+
+class Index extends React.Component{   
+    render(){
+        return (
+            <div className="box" >
+                <React.Suspense fallback={ <div className="loading"></div> } >
+                    <LazyComponent />
+                </React.Suspense>
+            </div>
+        )
+    }
+}
+```
+**效果**
+<img src="./images/lazy.gif" width="300px">
+
+### Suspense
+`Suspense` 可以通过 `fallback` 属性指定 `React` 元素为加载指示器，在子组件尚未具备渲染条件的时候展示该元素，目前懒加载组件（`React.lazy`）是 `Suspense` 支持的唯一用例。
+
+`Suspense` 组件可以置于懒加载组件之上的任何位置，一个 `Suspense` 组件可以包裹多个懒加载组件。
+```js
+// 该组件是动态加载的
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+
+function MyComponent() {
+    return (
+        // 显示 <Spinner> 组件直至 OtherComponent 加载完成
+        <React.Suspense fallback={<Spinner />}>
+            <OtherComponent />
+        </React.Suspense>
+    );
+}
+```
+
+### Fragment
+`react` 不允许一个组件返回多个节点元素，但我们有的时候又会有这种需求，例如：
+```js
+class Table extends React.Component {
+    render() {
+        return (
+            <table>
+                <tr>
+                    <Columns />
+                </tr>
+            </table>
+        )
+    }
+}
+```
+`<Columns />` 组件需要返回多个 `<td>` 元素才能让渲染的 `HTML` 有效，但 `react` 不支持下面的写法：
+```js
+class Columns extends React.Component {
+    render() {
+        return (
+            <td>Hello</td>
+            <td>World</td>
+        )
+    }
+}
+```
+我们可以在外层套一个 `div`，但是这样生成的 `HTML` 将无效：
+```js
+<div>
+    <td>Hello</td>
+    <td>World</td>
+</div>
+```
+`Fragment` 的出现就解决了这个问题，它可以让一个组件返回多个元素，而且不会增加额外的 `dom` 元素：
+```js
+<React.Fragment>
+    <td>Hello</td>
+    <td>World</td>
+</React.Fragment>
+```
+还可以使用它的短语法进行简写，和 `Fragment` 的区别是，`Fragment` 可以支持 `key` 属性，`<></>` 不支持：
+```js
+<>
+    <td>Hello</td>
+    <td>World</td>
+</>
+```
+我们常用的 `map` 遍历返回的元素，`react` 会默认在外层套一个 `Fragment`
+```js
+{ ['Hello', 'World'].map(item => <div key={item}> {item} </div>) }
+```
+`react` 处理后：
+```js
+<React.Fragment>
+    <div key="Hello"> Hello </div>
+    <div key="World"> World </div>
+</React.Fragment>
 ```
