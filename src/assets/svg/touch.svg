@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="68px" height="68px" viewBox="0 0 68 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>添加按钮</title>
+    <defs>
+        <circle id="path-1" cx="24" cy="24" r="24"></circle>
+        <filter x="-35.4%" y="-27.1%" width="170.8%" height="170.8%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.149019608   0 0 0 0 0.149019608   0 0 0 0 0.149019608  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="客户" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="301_客户详情---分店关联" transform="translate(-301.000000, -620.000000)">
+            <g id="添加按钮" transform="translate(311.000000, 626.000000)">
+                <g id="Oval">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#FEFFFE" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <text id="首页" font-family="PingFangSC-Regular, PingFang SC" font-size="11" font-weight="normal" line-spacing="10" fill="#262626">
+                    <tspan x="13" y="42">首页</tspan>
+                </text>
+                <g id="编组" transform="translate(16.000000, 8.000000)" fill="#262626">
+                    <path d="M9.5046953,0.452356025 L14.8594532,4.13821989 C15.5957324,4.60732984 15.9973393,5.47853403 15.9973393,6.34973821 L15.9973393,13.3193717 C16.0642737,14.7937173 14.8594532,16 13.3868948,16 L2.67737895,16 C1.20482052,16 0,14.7937173 0,13.3193717 L0,6.28272252 C0,5.4659686 0.352974762,4.7081152 1.00377199,4.23003927 L6.49264396,0.452356025 C7.4297266,-0.150785342 8.63454712,-0.150785342 9.5046953,0.452356025 Z M9.04864105,1.11190052 C8.48916213,0.724098893 7.70786341,0.698245451 7.07886741,1.03554659 L6.94655006,1.11338434 L1.56803375,4.81498658 C1.11931396,5.1008821 0.845607948,5.58100854 0.806154477,6.14109988 L0.801205652,6.28272252 L0.801205652,13.3193717 C0.801205652,14.3077152 1.57827408,15.1269076 2.54962686,15.1934578 L2.67737895,15.197822 L13.3868948,15.197822 C14.3751334,15.197822 15.1734031,14.4265116 15.1974375,13.4481165 L15.1961336,13.3193717 L15.1961336,6.34973821 C15.1961336,5.75788068 14.943376,5.20622438 14.5159872,4.87685437 L14.4055471,4.79924821 L9.04864105,1.11190052 Z" id="形状" fill-rule="nonzero"></path>
+                    <rect id="矩形" x="8" y="9" width="1" height="4.01089005" rx="0.5"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

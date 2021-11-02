@@ -1,0 +1,34 @@
+.box {
+    font-size: 16px;
+    line-height: 30px;
+}
+
+.memo_father {
+    width: 400px;
+    font-size: 16px;
+    padding: 15px 20px;
+    margin: 5px;
+    border: 1px solid #ccd;
+    background: skyblue;
+}
+
+.memo_son {
+    margin: 10px;
+    padding: 5px;
+    background: pink;
+}
+
+.memo_row {
+    width: 300px;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.img {
+    display: block;
+    width: 200px;
+    height: 200px;
+    margin: 40px auto;
+}
