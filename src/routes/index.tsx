@@ -38,6 +38,14 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Component/strictMode'))}
                 />
                 <Route
+                    path="/createElement"
+                    component={React.lazy(() => import('@/pages/Tools/createElement'))}
+                />
+                <Route
+                    path="/cloneElement"
+                    component={React.lazy(() => import('@/pages/Tools/cloneElement'))}
+                />
+                <Route
                     path="/"
                     component={React.lazy(() => import('@/pages/Main'))}
                 />

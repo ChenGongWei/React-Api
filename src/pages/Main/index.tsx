@@ -66,6 +66,19 @@ const Main: React.FC<HomeProp> = () => {
                     path: '/strictMode',
                 },
             ],
+        },
+        {
+            title: '工具类',
+            children: [
+                {
+                    name: 'createElement',
+                    path: '/createElement'
+                },
+                {
+                    name: 'cloneElement',
+                    path: '/cloneElement'
+                }
+            ]
         }
     ]
 

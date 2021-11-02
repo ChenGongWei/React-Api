@@ -373,3 +373,80 @@ class strictMode extends React.Component{
 ```
 **结果：**
 <img src="./images/strictMode.png" width="800px">
+
+
+
+
+
+## 工具类
+
+下面要复习的是 `React` 工具类 `API` 的用法：
+
+<img src="./images/tools.png" width="700px">
+
+### [createElement](src/pages/Tools/createElement.tsx)
+我们现在写 `React` 一般都是用 `JSX` 的格式，而我们写的 `JSX` 最终都会被 `babel` 用 `createElement` 编译成 `React` 元素形式。
+例如：
+```js
+return (
+    <div className="box">
+        <div className="title">生命周期</div>
+        <React.Fragment>Flagment</React.Fragment>
+        文本
+    </div>
+)
+```
+会被编译成：
+```js
+return React.createElement("div", { className: "box" },
+        React.createElement("div", { className: "title" }, "\u751F\u547D\u5468\u671F"),
+        React.createElement(React.Fragment, null, "Flagment"),
+        "\u6587\u672C")
+```
+
+`createElement` 的使用方法：
+```js
+React.createElement(
+    type,
+    [props],
+    [...children]
+)
+```
+* 第一个参数是组件类型，可以传入组件名或 `dom` 元素类型
+* 第二个参数是一个对象，在 `dom` 类型中为属性，组件类型为 `props`
+* 后续参数为 `children` 子元素或子组件
+  
+### [cloneElement](src/pages/Tools/cloneElement.tsx)
+`cloneElement` 顾名思义就是用来克隆元素的，以 `element` 元素为样板克隆并返回新的 `React` 元素，返回元素的 `props` 是将新的 `props` 与原始元素的 `props` 浅层合并后的结果。
+
+```js
+function TestComponent(props) {
+    return (
+        <div>{props.name}</div>
+    )
+}
+
+
+function Index() {
+    const element = <TestComponent name='test' />
+    return (
+        <div>
+            { element }
+            {React.cloneElement(element, { name: 'clone' })}
+        </div>
+    )
+}
+```
+
+`cloneElement` 的使用方法：
+```js
+React.cloneElement(
+    element,
+    [config],
+    [...children]
+)
+```
+* 第一个参数是 `element` 元素
+* 第二个参数可以包含 `props`、`key`、`ref`
+* 后续参数为 `children` 子元素或子组件
+  
