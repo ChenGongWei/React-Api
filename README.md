@@ -218,6 +218,7 @@ class LazyIndex extends React.Component{
 }
 ```
 **效果**
+
 <img src="./images/lazy.gif" width="300px">
 
 ### [Suspense](src/pages/Component/lazyIndex.tsx)
