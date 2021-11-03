@@ -46,6 +46,14 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Tools/cloneElement'))}
                 />
                 <Route
+                    path="/createContext"
+                    component={React.lazy(() => import('@/pages/Tools/createContext'))}
+                />
+                <Route
+                    path="/createFactory"
+                    component={React.lazy(() => import('@/pages/Tools/createFactory'))}
+                />
+                <Route
                     path="/"
                     component={React.lazy(() => import('@/pages/Main'))}
                 />

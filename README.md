@@ -450,3 +450,68 @@ React.cloneElement(
 * 第二个参数可以包含 `props`、`key`、`ref`
 * 后续参数为 `children` 子元素或子组件
   
+### [createContext](src/pages/Tools/createContext.tsx)
+`createContext` 用于创建一个 `Context` 对象，当 `React` 渲染一个订阅了 `Context` 对象的组件，这个组件会从组件树中离自身最近的 `Provider` 中读取当前的 `Context` 的值，如果没有匹配到 `Provider`，那么就会获取 `defaultValue` 的值。
+```js
+const MyContext = React.createContext(defaultValue)
+```
+
+每个 `Context` 对象都会返回一个 `Provider` 和 `Consumer` 组件。`Provider` 接收一个 `value` 属性并传递给内部的消费组件 `Consumer`；`Consumer` 订阅 `Context` 的变化，当 `Provider` 的 `value` 值变化时会重新渲染。
+
+```js
+const MyContext = React.createContext({})
+
+function Test(props) {
+
+    const { name, age } = props
+
+    return (
+        <div>
+            <div>姓名：{ name }</div>
+            <div>年龄：{ age }</div>
+        </div>
+    )
+}
+
+function ConsumerComponent() {
+    return (
+        <MyContext.Consumer>
+            { value => <Test {...value} /> }
+        </MyContext.Consumer>
+    )
+}
+
+function ProviderComponent() {
+    return (
+        <MyContext.Provider value={{ name: 'cgw', age: 18 }}>
+            <ConsumerComponent />
+        </MyContext.Provider>
+    )
+}
+```
+
+### [createFactory](src/pages/Tools/createFactory.tsx)
+`createFactory` 用于返回生成制定类型 `React` 元素的函数，作用与 `createElement` 类似，类型参数可以使标签名字符串（像是 `'div'` 或 `'span'`），也可以是 `React` 组件类型，或是 `React Fragment` 类型。
+
+```js
+const Test = () => {
+    return ( <div>Test</div> )
+}
+
+const Index = () => {
+
+    const Text = React.createFactory(() => <div>createFactory创建的div</div>)
+    const TestFactory = React.createFactory(Test)
+
+    return (
+        <div>
+            <Text />
+            <TestFactory />
+        </div>
+    )
+}
+```
+
+此辅助函数已废弃，建议使用 `JSX` 语法或直接调用 `React.createElement` 来替代它。
+
+

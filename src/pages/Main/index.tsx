@@ -77,6 +77,14 @@ const Main: React.FC<HomeProp> = () => {
                 {
                     name: 'cloneElement',
                     path: '/cloneElement'
+                },
+                {
+                    name: 'createContext',
+                    path: '/createContext'
+                },
+                {
+                    name: 'createFactory',
+                    path: '/createFactory'
                 }
             ]
         }
