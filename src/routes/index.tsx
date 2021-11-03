@@ -70,6 +70,18 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Tools/childrenForEach'))}
                 />
                 <Route
+                    path="/childrenCount"
+                    component={React.lazy(() => import('@/pages/Tools/childrenCount'))}
+                />
+                <Route
+                    path="/childrenOnly"
+                    component={React.lazy(() => import('@/pages/Tools/childrenOnly'))}
+                />
+                <Route
+                    path="/childrenToArray"
+                    component={React.lazy(() => import('@/pages/Tools/childrenToArray'))}
+                />
+                <Route
                     path="/"
                     component={React.lazy(() => import('@/pages/Main'))}
                 />

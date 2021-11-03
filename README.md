@@ -597,6 +597,9 @@ const Index = () => {
 ```
 
 ### [Children.map](src/pages/Tools/childrenMap.tsx)
+```js
+React.Children.map(children, function[(thisArg)])
+```
 `React.Children` 提供了五个用于处理 `this.props.children` 不透明数据结构的方法，`map` 便是其中一个。
 `map` 接受两个参数，第一个参数为节点数组，第二个参数为处理函数，`map` 会为数组中的每一个节点调用该函数，最后返回一个处理后的节点数组。
 
@@ -638,18 +641,19 @@ const Index = () => {
 **注意：**如果 `children` 是一个 `Fragment` 对象，它会被视为单一子节点的情况处理，而不会被遍历。
 
 ### [Children.forEach](src/pages/Tools/childrenForEach.tsx)
-与 `React.Children.map` 用法类似，但是不会返回一个数组，只会遍历传入的节点数组。
+```js
+React.Children.forEach(children, function[(thisArg)])
+```
+与 `React.Children.map` 用法类似，但 `map` 会返回一个处理后的新数组，`forEach` 不会返回一个数组，只会遍历传入的节点数组。
 
 ```js
 const Text = () => {
     return ( <div>文本</div> )
 }
-
 const ForEachComponent = (props) => {
     React.Children.forEach(props.children, item => console.log(item))
     return props.children
 }
-
 const Index = () => {
     return (
         <>
@@ -663,3 +667,87 @@ const Index = () => {
 }
 ```
 
+### [Children.count](src/pages/Tools/childrenCount.tsx)
+```js
+React.Children.count(children)
+```
+`React.Children.count` 返回 `children` 中的组件总数量，等同于通过 `map` 或 `forEach` 调用回调函数的次数。
+
+```js
+const Text = () => {
+    return ( <div>文本</div> )
+}
+const CountComponent = (props) => {
+    console.log('Count: ', React.Children.count(props.children))
+    return props.children
+}
+const Index = () => {
+    return (
+        <>
+            <CountComponent>
+                { [1, 2, 3].map(item => <div key={item}>{ item }</div> ) }
+                <span>一段文本</span>
+                <Text />
+            </CountComponent>
+        </>
+    )
+}
+```
+
+### [Children.only](src/pages/Tools/childrenOnly.tsx)
+```js
+React.Children.only(children)
+```
+`React.Children.only` 验证 `children` 是否只有一个子节点（一个 `React` 元素），是则返回它，否则此方法会抛出错误。
+
+```js
+const Text = () => {
+    return ( <div>文本</div> )
+}
+
+const OnlyComponent = (props) => {
+    console.log('Only: ', React.Children.only(props.children))
+    return props.children
+}
+
+const Index = () => {
+    return (
+        <>
+            <OnlyComponent>
+                <span>一段文本</span>
+                <Text />
+            </OnlyComponent>
+        </>
+    )
+}
+```
+`React.Children.only` 不接受 `React.Children.map` 的返回值，因为它是一个数组而不是 `React` 元素。
+
+### [Children.toArray](src/pages/Tools/childrenToArray.tsx)
+```js
+React.Children.toArray(children)
+```
+`React.Children.toArray` 将 `children` 这个复杂的数据结构以数组的方式扁平展开后返回一个新数组。
+
+```js
+const ToArrayComponent = (props) => {
+    console.log('children: ', props.children)
+    const children = React.Children.toArray(props.children)
+    console.log('toArray: ', children)
+    return ( <> {children} </> )
+}
+
+const Index = () => {
+    return (
+        <>
+            <ToArrayComponent>
+                <span>一段文本</span>
+                { new Array(3).fill(0).map((item,index)=>
+                    new Array(2).fill(1).map((item1,index1)=>
+                        <div key={index+index1}>{item+item1}</div>)) }
+            </ToArrayComponent>
+        </>
+    )
+}
+```
+<img src="./images/toArray.png" width="900px">

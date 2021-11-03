@@ -101,6 +101,18 @@ const Main: React.FC<HomeProp> = () => {
                 {
                     name: 'Children.forEach',
                     path: '/childrenForEach'
+                },
+                {
+                    name: 'Children.count',
+                    path: '/childrenCount'
+                },
+                {
+                    name: 'Children.only',
+                    path: '/childrenOnly'
+                },
+                {
+                    name: 'Children.toArray',
+                    path: '/childrenToArray'
                 }
             ]
         }
