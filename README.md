@@ -595,3 +595,71 @@ const Index = () => {
     )
 }
 ```
+
+### [Children.map](src/pages/Tools/childrenMap.tsx)
+`React.Children` 提供了五个用于处理 `this.props.children` 不透明数据结构的方法，`map` 便是其中一个。
+`map` 接受两个参数，第一个参数为节点数组，第二个参数为处理函数，`map` 会为数组中的每一个节点调用该函数，最后返回一个处理后的节点数组。
+
+```js
+const Text = () => {
+    return ( <div>文本</div> )
+}
+
+const WarpComponent = (props) => {
+    console.log('props.children: ', props.children)
+    return props.children
+}
+
+const MapComponent = (props) => {
+    const children = React.Children.map(props.children, item => item)
+    console.log('React.Children: ', children)
+    return children
+}
+
+const Index = () => {
+    return (
+        <>
+            <WarpComponent>
+                { [1, 2, 3].map(item => <div key={item}>{ item }</div> ) }
+                <span>一段文本</span>
+                <Text />
+            </WarpComponent>
+            <MapComponent>
+                { [1, 2, 3].map(item => <div key={item}>{ item }</div> ) }
+                <span>一段文本</span>
+                <Text />
+            </MapComponent>
+        </>
+    )
+}
+```
+<img src="./images/childrenMap.png" width="900px">
+
+**注意：**如果 `children` 是一个 `Fragment` 对象，它会被视为单一子节点的情况处理，而不会被遍历。
+
+### [Children.forEach](src/pages/Tools/childrenForEach.tsx)
+与 `React.Children.map` 用法类似，但是不会返回一个数组，只会遍历传入的节点数组。
+
+```js
+const Text = () => {
+    return ( <div>文本</div> )
+}
+
+const ForEachComponent = (props) => {
+    React.Children.forEach(props.children, item => console.log(item))
+    return props.children
+}
+
+const Index = () => {
+    return (
+        <>
+            <ForEachComponent>
+                { [1, 2, 3].map(item => <div key={item}>{ item }</div> ) }
+                <span>一段文本</span>
+                <Text />
+            </ForEachComponent>
+        </>
+    )
+}
+```
+

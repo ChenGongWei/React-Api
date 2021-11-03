@@ -93,6 +93,14 @@ const Main: React.FC<HomeProp> = () => {
                 {
                     name: 'isValidElement',
                     path: '/isValidElement'
+                },
+                {
+                    name: 'Children.map',
+                    path: '/childrenMap'
+                },
+                {
+                    name: 'Children.forEach',
+                    path: '/childrenForEach'
                 }
             ]
         }

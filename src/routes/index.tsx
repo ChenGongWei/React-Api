@@ -62,6 +62,14 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Tools/isValidElement'))}
                 />
                 <Route
+                    path="/childrenMap"
+                    component={React.lazy(() => import('@/pages/Tools/childrenMap'))}
+                />
+                <Route
+                    path="/childrenForEach"
+                    component={React.lazy(() => import('@/pages/Tools/childrenForEach'))}
+                />
+                <Route
                     path="/"
                     component={React.lazy(() => import('@/pages/Main'))}
                 />
