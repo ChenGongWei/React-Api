@@ -54,6 +54,14 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Tools/createFactory'))}
                 />
                 <Route
+                    path="/createRef"
+                    component={React.lazy(() => import('@/pages/Tools/createRef'))}
+                />
+                <Route
+                    path="/isValidElement"
+                    component={React.lazy(() => import('@/pages/Tools/isValidElement'))}
+                />
+                <Route
                     path="/"
                     component={React.lazy(() => import('@/pages/Main'))}
                 />

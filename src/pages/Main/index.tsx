@@ -85,6 +85,14 @@ const Main: React.FC<HomeProp> = () => {
                 {
                     name: 'createFactory',
                     path: '/createFactory'
+                },
+                {
+                    name: 'createRef',
+                    path: '/createRef'
+                },
+                {
+                    name: 'isValidElement',
+                    path: '/isValidElement'
                 }
             ]
         }

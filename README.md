@@ -514,4 +514,84 @@ const Index = () => {
 
 此辅助函数已废弃，建议使用 `JSX` 语法或直接调用 `React.createElement` 来替代它。
 
+### [createRef](src/pages/Tools/createRef.tsx)
+`createRef` 可以创建一个 `ref` 元素，附加在 `react` 元素上。
 
+```js
+class Index extends React.Component {
+
+    node = React.createRef()
+
+    componentDidMount() {
+        console.log('createRef：', this.node)
+    }
+
+    render() {
+        return (<div ref={this.node}> createRef </div>)
+    }
+}
+```
+
+在 `class` 组件中还可以这样获取 `ref`：
+
+```js
+class Index extends React.Component {
+
+    node = null
+
+    componentDidMount() {
+        console.log('ref：', this.node)
+    }
+
+    render() {
+        return (<div ref={ref => this.node = ref}> ref </div>)
+    }
+}
+```
+
+在函数组件可以使用 `useRef` 来获取 `ref`：
+
+```js
+const Index = () => {
+
+    const node = useRef(null)
+
+    useEffect(() => {
+        console.log('useRef：', node)
+    }, [node])
+
+    return (<div ref={node}> useRef </div>)
+}
+```
+
+
+
+### [isValidElement](src/pages/Tools/isValidElement.tsx)
+验证接收的参数是否为 `React` 元素，返回 `true` 或 `false`。
+
+```js
+const Text = () => {
+    return ( <div> 我是一个组件 </div> )
+}
+
+const IsValidElement = props => {
+
+    // 三段文字都会展示
+    // return props.children
+
+    // 非 React元素会被过滤
+    const newChildren = props.children.filter((item) => React.isValidElement(item))
+    return newChildren
+
+}
+
+const Index = () => {
+    return (
+        <IsValidElement>
+            <div> 我是一个div </div>
+            <Text />
+            我是一段文本
+        </IsValidElement>
+    )
+}
+```
