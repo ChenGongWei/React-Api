@@ -154,6 +154,10 @@ const Main: React.FC<HomeProp> = () => {
                 {
                     name: 'useImperativeHandle',
                     path: '/useImperativeHandle'
+                },
+                {
+                    name: 'useDebugValue',
+                    path: '/useDebugValue'
                 }
             ]
         }

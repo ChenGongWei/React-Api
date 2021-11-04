@@ -118,6 +118,10 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Hook/useImperativeHandle'))}
                 />
                 <Route
+                    path="/useDebugValue"
+                    component={React.lazy(() => import('@/pages/Hook/useDebugValue'))}
+                />
+                <Route
                     path="/"
                     component={React.lazy(() => import('@/pages/Main'))}
                 />

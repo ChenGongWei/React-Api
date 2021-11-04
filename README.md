@@ -1088,3 +1088,29 @@ const Index = () => {
     )
 }
 ```
+
+### [useDebugValue](src/pages/Hook/useDebugValue.tsx)
+`useDebugValue` 用于在 `React` 开发者工具中显示自定义 `hook` 的标签
+
+```js
+const useFriendStatus = (status: boolean) => {
+    const [isOnline] = useState(status);
+    // 在开发者工具中的这个 Hook 旁边显示标签
+    // e.g. "FriendStatus: Online"
+    useDebugValue(isOnline ? 'Online' : 'Offline');
+    return isOnline;
+}
+
+const Index = () => {
+    const online = useFriendStatus(true)
+    const offline = useFriendStatus(false)
+    return (
+        <>
+            <div>Tom{online ? '在线' : '不在线'}</div>
+            <div>John{offline ? '在线' : '不在线'}</div>
+        </>
+    )
+}
+```
+
+<img src="./images/debug.png" width="1000px">
