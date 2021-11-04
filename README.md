@@ -1010,3 +1010,81 @@ const UseReducer = () => {
 
 `useReducer` 在某些场景下比 `useState` 更适用，例如 `state` 逻辑比较复杂且包含多个值，依赖之前的 `state` 等。
 我们还可以通过 `context` 的方式将 `dispatch` 函数传递给子组件，这样避免了在组件树的每一层手动传递，而且在任意子节点都能通过 `useContext` 获取到 `dispatch` 函数。
+
+
+### [useLayoutEffect](src/pages/Hook/useLayoutEffect.tsx)
+`useLayoutEffect` 的使用方法和 `useEffect` 差不多，只是执行时机不同：
+`useEffect`：组件更新挂载完成 -> 浏览器 `dom` 绘制完成 -> 执行 `useEffect` 回调
+`useLayoutEffect`：组件更新挂载完成 -> 执行 `useLayoutEffect` 回调 -> 浏览器 `dom` 绘制完成
+
+`useLayoutEffect` 可能会阻塞浏览器的绘制，应尽可能使用标准的 `useEffect` 以避免阻塞视觉更新。
+```js
+const UseLayoutEffect = () => {
+
+    const inplEl = useRef<HTMLInputElement>(null)
+
+    useLayoutEffect(() => {
+        /** 在dom绘制前，给输入框赋上初始值 */
+        inplEl.current?.setAttribute('value', '初始值')
+    }, [])
+
+    return ( <input ref={inplEl} type="text" /> )
+
+}
+```
+
+### [useImperativeHandle](src/pages/Hook/useImperativeHandle.tsx)
+`useImperativeHandle` 可以配合 `forwardRef` 自定义子组件暴露给父组件的 `ref` 的实例值。`useImperativeHandle` 接受三个参数：
+* 第一个参数为 `ref` 对象
+* 第二个参数为函数，返回值作为 `ref` 的实例值暴露给父组件
+* 第三个参数为依赖性数组
+
+```js
+interface InputInstance {
+    onFocus: () => void
+    onChangeValue: (val: string) => void
+}
+
+const Input = forwardRef((props, ref) => {
+
+    const inplEl = useRef<HTMLInputElement>(null)
+    const [value, setValue] = useState('')
+
+    const onChangeValue = (val: string) => setValue(val)
+
+    useImperativeHandle(ref, () => {
+        const handleRefs = {
+            // 声明聚焦input框的方法
+            onFocus() {
+                inplEl.current?.focus()
+            },
+            // 声明改变input值的方法
+            onChangeValue
+        }
+        return handleRefs
+    })
+
+    return (
+        <div>
+            <input ref={inplEl} type="text" value={value} onChange={e => onChangeValue(e.target.value)} />
+        </div>
+    )
+})
+
+const Index = () => {
+
+    const ref = useRef<InputInstance>(null)
+
+    const handleClick = () => {
+        ref.current?.onFocus()
+        ref.current?.onChangeValue('默认值')
+    }
+
+    return (
+        <>
+            <Input ref={ref} />
+            <button onClick={handleClick}>聚焦并改变值</button>
+        </>
+    )
+}
+```

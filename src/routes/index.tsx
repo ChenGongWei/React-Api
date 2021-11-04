@@ -110,6 +110,14 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Hook/useReducer'))}
                 />
                 <Route
+                    path="/useLayoutEffect"
+                    component={React.lazy(() => import('@/pages/Hook/useLayoutEffect'))}
+                />
+                <Route
+                    path="/useImperativeHandle"
+                    component={React.lazy(() => import('@/pages/Hook/useImperativeHandle'))}
+                />
+                <Route
                     path="/"
                     component={React.lazy(() => import('@/pages/Main'))}
                 />

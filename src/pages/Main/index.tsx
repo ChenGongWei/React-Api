@@ -146,6 +146,14 @@ const Main: React.FC<HomeProp> = () => {
                 {
                     name: 'useReducer',
                     path: '/useReducer'
+                },
+                {
+                    name: 'useLayoutEffect',
+                    path: '/useLayoutEffect'
+                },
+                {
+                    name: 'useImperativeHandle',
+                    path: '/useImperativeHandle'
                 }
             ]
         }
