@@ -115,6 +115,23 @@ const Main: React.FC<HomeProp> = () => {
                     path: '/childrenToArray'
                 }
             ]
+        },
+        {
+            title: 'React Hook',
+            children: [
+                {
+                    name: 'useState',
+                    path: '/useState'
+                },
+                {
+                    name: 'useEffect',
+                    path: '/useEffect'
+                },
+                {
+                    name: 'useMemo',
+                    path: '/useMemo'
+                }
+            ]
         }
     ]
 

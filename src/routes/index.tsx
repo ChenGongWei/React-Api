@@ -82,6 +82,18 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Tools/childrenToArray'))}
                 />
                 <Route
+                    path="/useState"
+                    component={React.lazy(() => import('@/pages/Hook/useState'))}
+                />
+                <Route
+                    path="/useEffect"
+                    component={React.lazy(() => import('@/pages/Hook/useEffect'))}
+                />
+                <Route
+                    path="/useMemo"
+                    component={React.lazy(() => import('@/pages/Hook/useMemo'))}
+                />
+                <Route
                     path="/"
                     component={React.lazy(() => import('@/pages/Main'))}
                 />
