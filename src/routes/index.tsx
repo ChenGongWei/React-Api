@@ -102,6 +102,14 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Hook/useRef'))}
                 />
                 <Route
+                    path="/useContext"
+                    component={React.lazy(() => import('@/pages/Hook/useContext'))}
+                />
+                <Route
+                    path="/useReducer"
+                    component={React.lazy(() => import('@/pages/Hook/useReducer'))}
+                />
+                <Route
                     path="/"
                     component={React.lazy(() => import('@/pages/Main'))}
                 />

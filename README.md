@@ -918,3 +918,95 @@ const FocusInput = () => {
 
 }
 ```
+
+### [useContext](src/pages/Hook/useContext.tsx)
+用 `createContext` 创建的 `context` 对象的值，除了能用 `Consumer` 接收外，还可以用 `useContext` 接收。`useContext` 接收一个 `context` 对象作为参数，并返回改对象当前值，当前值由上层组件中距离当前组件最近的 `Provider` 的 `value` 属性决定。当 `context` 的值发生更新时，该 `Hook` 会触发重渲染。
+
+```js
+const MyContext = React.createContext<any>(null)
+
+const ConsumerComponent = () => {
+    return (
+        <MyContext.Consumer>
+            { value => <div>name: { value.name }</div> }
+        </MyContext.Consumer>
+    )
+}
+
+const UseContext = () => {
+    const value = useContext(MyContext)
+    return ( <div>name: { value.name }</div> )
+}
+
+const ProviderComponent = () => {
+    return (
+        <MyContext.Provider value={{ name: 'cgw' }}>
+            <ConsumerComponent />
+            <UseContext />
+        </MyContext.Provider>
+    )
+}
+```
+
+### [useReducer](src/pages/Hook/useReducer.tsx)
+`useReducer` 的使用方法类似于 `Redux`，它接收两个参数，第一个参数是形如 `(state, action) => newState` 的 `reducer`函数，第二个参数是 `state` 的初始值，返回一个数组，第一项是 `state` 的值，第二项是派发更新的 `dispatch` 函数。
+```js
+const MyContext = React.createContext<any>(null)
+
+const UseContext = () => {
+    /* 通过useContext获取dispatch函数 */
+    const { dispatchCount } = useContext(MyContext)
+    return ( 
+        <>
+            <button onClick={() => dispatchCount({ type: 'increment' })}>+1</button><br />
+            <button onClick={() => dispatchCount({ type: 'decrement' })}>-1</button>
+        </> 
+    )
+}
+
+const Children = () => {
+    return <UseContext />
+}
+
+const UseReducer = () => {
+
+    const inpEl = useRef<HTMLInputElement>(null)
+    /* count接收state的值， dispatchCount 为派发函数 */
+    const [count, dispatchCount] = useReducer((state: number, action: any) => {
+        const { type, payload } = action
+        switch (type) {
+            case 'increment':
+                return state + 1
+            case 'decrement':
+                return state - 1
+            case 'reset':
+                return payload
+            default:
+                throw new Error()
+        }
+    }, 0)
+
+    return (
+        <>
+            <div>Count: {count}</div>
+            <button onClick={() => dispatchCount({ type: 'increment' })}>+1</button><br />
+            <button onClick={() => dispatchCount({ type: 'decrement' })}>-1</button>
+            <div>
+                <input ref={inpEl} type="number" defaultValue={0} />
+                <button
+                    onClick={() =>
+                        dispatchCount({ type: 'reset', payload: parseInt(inpEl.current?.value || '0') })
+                }>
+                    赋值
+                </button>
+            </div>
+            <MyContext.Provider value={{ dispatchCount }}>
+                <Children />
+            </MyContext.Provider>
+        </>
+    )
+}
+```
+
+`useReducer` 在某些场景下比 `useState` 更适用，例如 `state` 逻辑比较复杂且包含多个值，依赖之前的 `state` 等。
+我们还可以通过 `context` 的方式将 `dispatch` 函数传递给子组件，这样避免了在组件树的每一层手动传递，而且在任意子节点都能通过 `useContext` 获取到 `dispatch` 函数。

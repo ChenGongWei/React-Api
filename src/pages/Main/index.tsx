@@ -138,6 +138,14 @@ const Main: React.FC<HomeProp> = () => {
                 {
                     name: 'useRef',
                     path: '/useRef'
+                },
+                {
+                    name: 'useContext',
+                    path: '/useContext'
+                },
+                {
+                    name: 'useReducer',
+                    path: '/useReducer'
                 }
             ]
         }
