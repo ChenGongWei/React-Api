@@ -130,6 +130,14 @@ const Main: React.FC<HomeProp> = () => {
                 {
                     name: 'useMemo',
                     path: '/useMemo'
+                },
+                {
+                    name: 'useCallback',
+                    path: '/useCallback'
+                },
+                {
+                    name: 'useRef',
+                    path: '/useRef'
                 }
             ]
         }

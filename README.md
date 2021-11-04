@@ -828,7 +828,7 @@ const Counter = () => {
 
 `useEffect` 和 `useState` 一样都可以在组件中多次使用，你可以将不同逻辑拆分开来写在不同的 `useEffect` 里面。
 
-### useMemo
+### [useMemo](src/pages/Hook/useMemo.tsx)
 `useMemo` 接受两个参数，第一个是一个函数，返回值会被缓存，第二个参数是一个依赖项数组，只有当数组里的依赖项发生变化时，才会执行第一个函数更新值，如未提供依赖项数组，`useMemo` 会在每次渲染时都执行第一个函数更新值。
 
 ```js
@@ -856,5 +856,65 @@ const Counter = (props) => {
 
 const Index = () => {
     return ( <Counter num={123} /> )
+}
+```
+
+### [useCallback](src/pages/Hook/useCallback.tsx)
+`useCallback` 和 `useMemo` 接收的参数一样，作用也都是用来缓存数据；不同的是 `useMemo` 缓存的是第一个函数执行后返回的值，`useCallback` 缓存的是第一个函数。`useCallback` 返回的函数可以作为 `props` 属性传递给子组件，搭配 `memo` 使用可以避免子组件不必要的重渲染。
+
+```js
+// 用 React.memo 包裹子组件
+const Money = React.memo((props) => {
+    console.log('资产更新了')
+
+    return (
+        <div>我的资产：{props.myMoney()} </div>
+    )
+})
+
+const Index = () => {
+
+    const [count, setCount] = useState(0)
+    const [money, setMoney] = useState(100)
+
+    const myMoney = useCallback(() => {
+        return <span style={{ color: 'red', fontWeight: 'bold' }}>{money}</span>
+        // 只有 money 的值发生变化，myMoney 的引用才会更新，子组件才会重新渲染
+    }, [money])
+
+    return (
+        <div>
+            <p> count: {count} </p>
+            <p> money: {money} </p>
+
+            <button onClick={() => setCount(count + 1)}> add Count </button>
+            <button onClick={() => setMoney(money + 50)}> add Money </button>
+
+            <Money myMoney={myMoney} />
+        </div>
+    )
+}
+```
+
+### [useRef](src/pages/Hook/useRef.tsx)
+`useRef` 返回一个可变的 `ref` 对象，其 `current` 属性值为初始化传入的参数，返回的 `ref` 对象在组件的整个生命周期内持续存在。我们可以用它来获取 `dom` 元素或组件实例，也可以用它来保存一些数据。
+
+```js
+const FocusInput = () => {
+
+    const inputEl = useRef<HTMLInputElement>(null)
+
+    const focusInput = useCallback(() => {
+        console.log(inputEl)
+        inputEl.current?.focus()
+    }, [inputEl])
+
+    return (
+        <>
+            <input ref={inputEl} />
+            <button onClick={focusInput}>聚焦</button>
+        </>
+    )
+
 }
 ```
