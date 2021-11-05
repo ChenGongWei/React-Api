@@ -122,8 +122,28 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Hook/useDebugValue'))}
                 />
                 <Route
+                    path="/render"
+                    component={React.lazy(() => import('@/pages/Dom/render'))}
+                />
+                <Route
                     path="/createPortal"
                     component={React.lazy(() => import('@/pages/Dom/createPortal'))}
+                />
+                <Route
+                    path="/findDOMNode"
+                    component={React.lazy(() => import('@/pages/Dom/findDOMNode'))}
+                />
+                <Route
+                    path="/flushSync"
+                    component={React.lazy(() => import('@/pages/Dom/flushSync'))}
+                />
+                <Route
+                    path="/batchedUpdates"
+                    component={React.lazy(() => import('@/pages/Dom/batchedUpdates'))}
+                />
+                <Route
+                    path="/unmountComponentAtNode"
+                    component={React.lazy(() => import('@/pages/Dom/unmountComponentAtNode'))}
                 />
                 <Route
                     path="/"

@@ -175,6 +175,22 @@ const Main: React.FC<HomeProp> = () => {
                 {
                     name: 'createPortal',
                     path: '/createPortal'
+                },
+                {
+                    name: 'findDOMNode',
+                    path: '/findDOMNode'
+                },
+                {
+                    name: 'flushSync',
+                    path: '/flushSync'
+                },
+                {
+                    name: 'batchedUpdates',
+                    path: '/batchedUpdates'
+                },
+                {
+                    name: 'unmountComponentAtNode',
+                    path: '/unmountComponentAtNode'
                 }
             ]
         }
