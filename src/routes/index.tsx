@@ -122,6 +122,10 @@ const Routes: React.FC = () => {
                     component={React.lazy(() => import('@/pages/Hook/useDebugValue'))}
                 />
                 <Route
+                    path="/createPortal"
+                    component={React.lazy(() => import('@/pages/Dom/createPortal'))}
+                />
+                <Route
                     path="/"
                     component={React.lazy(() => import('@/pages/Main'))}
                 />

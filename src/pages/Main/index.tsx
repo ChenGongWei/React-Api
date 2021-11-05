@@ -160,6 +160,23 @@ const Main: React.FC<HomeProp> = () => {
                     path: '/useDebugValue'
                 }
             ]
+        },
+        {
+            title: 'React-dom',
+            children: [
+                {
+                    name: 'render',
+                    path: '/render'
+                },
+                {
+                    name: 'hydrate',
+                    path: '/hydrate'
+                },
+                {
+                    name: 'createPortal',
+                    path: '/createPortal'
+                }
+            ]
         }
     ]
 

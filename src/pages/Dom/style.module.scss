@@ -1,0 +1,29 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(70, 70, 70, .2);
+}
+
+.wrap {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px 30px;
+    background: #fff;
+    box-shadow: 0 0 20px 1px #fff;
+}
+
+.btn {
+    width: 60px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 3px;
+    border-radius: 3px;
+    background: #ccc;
+    cursor: pointer;
+}

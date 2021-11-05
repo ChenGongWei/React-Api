@@ -1114,3 +1114,97 @@ const Index = () => {
 ```
 
 <img src="./images/debug.png" width="1000px">
+
+
+## React-dom
+
+最后是 `React-dom` 部分比较重要的 `api`
+
+<img src="./images/dom.png" width="700px">
+
+### [render](src/index.js)
+```js
+ReactDOM.render(element, container[, callback])
+```
+
+`render` 的作用是在提供的容器里渲染一个 `React` 元素，一般我们都用它来渲染根部容器 `app`，接收三个参数：
+* `element`：需要渲染的 `React` 元素
+* `container`：容器节点，`element` 会被渲染在其内部，覆盖原有内容
+* `callback`：可选的回调函数，会在组件被渲染或更新之后被执行
+
+`render` 会控制传入容器节点里的内容，但不会修改容器节点。
+
+```js
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+)
+```
+
+### [hydrate](https://zh-hans.reactjs.org/docs/react-dom.html#hydrate)
+```js
+ReactDOM.hydrate(element, container[, callback])
+```
+
+`hydrate` 作用和 `render` 相同，区别是 `hydrate` 是用于服务端渲染的，在 `ReactDOMServer` 渲染的容器中对 `HTML` 的内容进行 `hydrate` 操作。
+
+### [createPortal](src/pages/Dom/createPortal.tsx)
+```js
+ReactDOM.createPortal(child, container)
+```
+
+`createPortal` 提供了一种将子节点渲染到存在于父组件以外的 `DOM` 节点的优秀的方案。
+
+通常情况下，组件都是被挂载在最近的父节点上，但有时我们会需要将子组件能够在视觉上“跳出”父容器，挂载在其他位置，例如 对话框、悬浮卡机提示框等，避免父组件的样式影响到该节点。
+
+`createPortal` 接收两个参数，第一个参数 `child` 是任何可渲染的 `React` 子元素，例如一个元素，字符串或 `fragment`；第二个参数 `container` 是一个 `DOM` 元素。
+
+```js
+interface ModalProps {
+    visible: boolean
+    onClose: () => void
+}
+
+const Modal = (props: ModalProps) => {
+
+    const [visible, setVisible] = useState(false)
+
+    const onClose = () => {
+        setVisible(false)
+        props.onClose()
+    }
+
+    useEffect(() => {
+        setVisible(props.visible)
+    }, [props.visible])
+
+    return (
+        <>
+            {/* 通过 React.createPortal 将组件挂载在 body 下 */}
+            {visible ? ReactDOM.createPortal(
+                <div className={style.modal}>
+                    <div className={style.wrap}>
+                        <div>我是弹框组件，挂载在body下</div>
+                        <div className={style.btn} onClick={onClose}>关闭</div>
+                    </div>
+                </div>
+            , document.body) : null}
+        </>
+    )
+}
+
+const Index = () => {
+
+    const [visible, setVisible] = useState(false)
+
+    return (
+        <>
+            <h1>我是标题</h1>
+            <button onClick={() => setVisible(true)}>弹框</button>
+            <Modal visible={visible} onClose={() => setVisible(false)} />
+        </>
+    )
+}
+```
